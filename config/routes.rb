@@ -1,6 +1,9 @@
 ActionController::Routing::Routes.draw do |map|
   
-  map.resources :books
+  map.resources :books do |book|
+    book.resources :comments, :only => :create
+  end
+
 
   # The priority is based upon order of creation: first created -> highest priority.
 

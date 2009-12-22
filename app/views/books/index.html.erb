@@ -1,5 +1,9 @@
+<% title 'My Books' %>
+
 <% for book in @books do %>
-    <h2><%=h book.title %></h2>
-    <p><%= book.thoughts %></p>
+  <h2><%=link_to(h(book.title), book_path(book)) %></h2>
+  <p><%= book.thoughts %></p>
 <% end %>
-    <%= will_paginate @books %>
+
+<%= will_paginate @books %>
+
