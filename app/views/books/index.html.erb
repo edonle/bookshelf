@@ -7,3 +7,11 @@
 
 <%= will_paginate @books %>
 
+<% if current_admin %>
+  <p>
+    Admin actions: <%= link_to 'New Book', new_book_path %>
+  </p>
+<% end %>
+
+
+

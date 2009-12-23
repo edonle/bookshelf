@@ -1,15 +1,22 @@
-# Filters added to this controller apply to all controllers in the application.
-# Likewise, all the methods added will be available for all controllers.
-
 class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
+  protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
-  # See ActionController::RequestForgeryProtection for details
-  # Uncomment the :secret if you're not using the cookie session store
-  protect_from_forgery # :secret => '93d95b9120acd7e9b89a34ef6890a47e'
-  
-  # See ActionController::Base for details 
-  # Uncomment this to filter the contents of submitted sensitive data parameters
-  # from your application log (in this case, all fields with names like "password"). 
+  # Scrub sensitive parameters from your log
   # filter_parameter_logging :password
+
+  filter_parameter_logging :password, :password_confirmation
+  helper_method :current_admin_session, :current_admin
+
+  private
+  def current_admin_session
+    return @current_admin_session if defined?(@current_admin_session)
+    @current_admin_session = AdminSession.find
+  end
+
+  def current_admin
+    return @current_admin if defined?(@current_admin)
+    @current_admin = current_admin_session && current_admin_session.user
+  end
 end
+

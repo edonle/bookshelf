@@ -17,6 +17,12 @@
       <%- end -%>
       
       <%= yield %>
+
+      <% if current_admin %>
+        <p><%= link_to 'Logout', admin_session_path(current_admin_session), :method => :delete %></p>
+      <% else %>
+        <p><%= link_to 'Login', new_admin_session_path %></p>
+      <% end %>
     </div>
   </body>
 </html>
